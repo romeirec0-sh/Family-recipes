@@ -1,175 +1,256 @@
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Our Family Recipes</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap');
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Family Cookbook</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap');
 
-  body { font-family:'Roboto',sans-serif; margin:0; background:#fff; color:#111; }
-  header { background:#c00; color:#fff; text-align:center; padding:1rem; font-family:'Playfair Display',serif; font-size:2.2rem; position:sticky; top:0; z-index:1000;}
-  nav { display:flex; overflow-x:auto; background:#000; color:#fff; }
-  nav button { flex:none; padding:.8rem 1rem; border:none; cursor:pointer; background:#000; color:#fff; font-weight:700; transition:.3s; white-space:nowrap;}
-  nav button:hover, nav button.active { background:#c00; color:#fff; }
-  .container { padding:1rem; max-width:1200px; margin:0 auto; }
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            background-color: #fff;
+            color: #222;
+        }
 
-  .recipe-card { border:1px solid #ccc; border-radius:10px; margin-bottom:1rem; background:#fff; box-shadow:0 4px 6px rgba(0,0,0,0.1);}
-  .recipe-header { padding:1rem; background:#c00; color:#fff; font-weight:700; cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-size:1.2rem; }
-  .recipe-header span { font-size:1.5rem; }
-  .recipe-content { display:none; padding:1rem; }
-  .recipe-content h4 { margin:.5rem 0; color:#c00; border-bottom:1px solid #c00; padding-bottom:.2rem; }
-  .recipe-content ul, .recipe-content ol { margin:0 0 1rem 1.2rem; }
+        header {
+            background-color: #000;
+            color: #fff;
+            text-align: center;
+            padding: 1.5rem 0;
+            font-family: 'Playfair Display', serif;
+        }
 
-  .note-section { margin-top:1rem; }
-  .note { background:#f9f9f9; padding:.5rem; border-radius:5px; margin-bottom:.5rem; border:1px solid #ddd; }
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
 
-  form { background:#f1f1f1; padding:1rem; border-radius:10px; margin-bottom:1rem; }
-  form h2 { color:#c00; font-family:'Playfair Display',serif; text-align:center; margin-bottom:.5rem; }
-  input, textarea, select, button { width:100%; padding:.5rem; margin:.3rem 0; border-radius:5px; border:1px solid #ccc; font-size:1rem; box-sizing:border-box; }
-  button.submit-btn { background:#c00; color:#fff; border:none; cursor:pointer; transition:.3s; font-weight:700; font-size:1rem; }
-  button.submit-btn:hover { background:#900; }
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            background-color: #f5f5f5;
+        }
 
-  /* Desktop style overrides */
-  @media (min-width:769px){
-    nav button{ font-size:1rem; padding:.8rem 1rem; }
-    .recipe-card { display:flex; flex-direction:column; }
-    .recipe-content { font-size:1rem; }
-    input, textarea, select, button { font-size:1rem; }
-  }
-</style>
+        .tab-btn {
+            background-color: #fff;
+            color: #000;
+            border: 2px solid #000;
+            padding: 0.5rem 1rem;
+            margin: 0.2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background-color: #ff0000;
+            color: #fff;
+            border-color: #ff0000;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .form-section, .notes-section, .ai-generator-section {
+            background-color: #fff;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 2px solid #000;
+            border-radius: 10px;
+        }
+
+        .form-section h2, .notes-section h2, .ai-generator-section h2 {
+            font-family: 'Playfair Display', serif;
+            color: #ff0000;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 0.8rem;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 0.5rem;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .submit-btn {
+            background-color: #ff0000;
+            color: #fff;
+            border: none;
+            padding: 0.7rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+        }
+
+        .recipe-tab {
+            display: none;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .recipe-card {
+            border: 2px solid #000;
+            border-radius: 10px;
+            padding: 1rem;
+            background-color: #f9f9f9;
+        }
+
+        .recipe-card h3 {
+            margin-top: 0;
+            font-family: 'Playfair Display', serif;
+            color: #ff0000;
+        }
+
+        .recipe-card ul, .recipe-card ol {
+            padding-left: 1.2rem;
+        }
+
+        .note {
+            border: 1px solid #000;
+            border-radius: 5px;
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            background-color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 <body>
+    <header>
+        <h1>Our Family Cookbook</h1>
+    </header>
 
-<header>Our Family Recipes</header>
+    <nav>
+        <button class="tab-btn active" data-tab="Breakfast">Breakfast</button>
+        <button class="tab-btn" data-tab="Lunch">Lunch</button>
+        <button class="tab-btn" data-tab="Dinner">Dinner</button>
+        <button class="tab-btn" data-tab="Desserts">Desserts</button>
+        <button class="tab-btn" data-tab="Breads">Breads</button>
+        <button class="tab-btn" data-tab="Sauces">Sauces</button>
+    </nav>
 
-<nav id="category-tabs">
-  <button class="active" data-category="All">All</button>
-  <button data-category="Breakfast">Breakfast</button>
-  <button data-category="Lunch">Lunch</button>
-  <button data-category="Dinner">Dinner</button>
-  <button data-category="Desserts">Desserts</button>
-  <button data-category="Breads">Breads</button>
-  <button data-category="Sauces">Sauces</button>
-</nav>
+    <div class="container">
 
-<div class="container">
+        <div class="form-section">
+            <h2>Add a New Recipe</h2>
+            <form id="add-recipe-form">
+                <div class="form-group">
+                    <label for="recipeName">Recipe Name</label>
+                    <input type="text" id="recipeName" required>
+                </div>
+                <div class="form-group">
+                    <label for="ingredients">Ingredients (comma separated)</label>
+                    <textarea id="ingredients" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="instructions">Instructions (one step per line, include measurements & preheating)</label>
+                    <textarea id="instructions" rows="6" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" required>
+                        <option value="Breakfast">Breakfast</option>
+                        <option value="Lunch">Lunch</option>
+                        <option value="Dinner">Dinner</option>
+                        <option value="Desserts">Desserts</option>
+                        <option value="Breads">Breads</option>
+                        <option value="Sauces">Sauces</option>
+                    </select>
+                </div>
+                <button type="submit" class="submit-btn">Add Recipe</button>
+            </form>
+        </div>
 
-  <!-- Add Recipe Form -->
-  <form id="add-recipe-form">
-    <h2>Add a New Recipe</h2>
-    <input type="text" id="recipeName" placeholder="Recipe Name" required>
-    <select id="category" required>
-      <option value="Breakfast">Breakfast</option>
-      <option value="Lunch">Lunch</option>
-      <option value="Dinner">Dinner</option>
-      <option value="Desserts">Desserts</option>
-      <option value="Breads">Breads</option>
-      <option value="Sauces">Sauces</option>
-    </select>
-    <textarea id="ingredients" rows="3" placeholder="Ingredients (include measurements, comma separated)" required></textarea>
-    <textarea id="instructions" rows="4" placeholder="Instructions (include preheat/timing, one step per line)" required></textarea>
-    <button type="submit" class="submit-btn">Add Recipe</button>
-  </form>
+        <div class="notes-section">
+            <h2>Notes / Comments</h2>
+            <form id="notes-form">
+                <div class="form-group">
+                    <label for="note-input">Leave a note or suggestion</label>
+                    <textarea id="note-input" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Add Note</button>
+            </form>
+            <div id="notes-display"></div>
+        </div>
 
-  <!-- Recipe Grid -->
-  <div id="recipe-grid"></div>
+        <div class="ai-generator-section">
+            <h2>AI Recipe Generator</h2>
+            <form id="ai-generator-form">
+                <div class="form-group">
+                    <label for="ai-input">Enter an idea (e.g., "Truffle Chicken Pasta")</label>
+                    <input type="text" id="ai-input" required>
+                </div>
+                <button type="submit" class="submit-btn">Generate Recipe</button>
+            </form>
+            <div id="ai-output"></div>
+        </div>
 
-  <!-- Notes Section -->
-  <form id="notes-form">
-    <h2>Add a Note</h2>
-    <textarea id="note-input" rows="2" placeholder="Leave a note or comment"></textarea>
-    <button type="submit" class="submit-btn">Add Note</button>
-  </form>
-  <div id="notes-display"></div>
+        <!-- Recipe Tabs -->
+        <div id="Breakfast" class="recipe-tab"></div>
+        <div id="Lunch" class="recipe-tab"></div>
+        <div id="Dinner" class="recipe-tab"></div>
+        <div id="Desserts" class="recipe-tab"></div>
+        <div id="Breads" class="recipe-tab"></div>
+        <div id="Sauces" class="recipe-tab"></div>
 
-  <!-- AI Recipe Generator -->
-  <form id="ai-generator-form">
-    <h2>AI Recipe Generator</h2>
-    <input type="text" id="ai-input" placeholder='E.g., "Truffle Chicken Pasta"' required>
-    <button type="submit" class="submit-btn">Generate Recipe</button>
-  </form>
-  <div id="ai-output"></div>
-</div>
+    </div>
 
 <script>
-const recipes = [
-  {name:"Sourdough Strawberry & Cream French Toast",category:"Breakfast",ingredients:["4 slices sourdough bread","2 eggs","1/2 cup milk","1 tsp vanilla extract","1 cup strawberries, sliced","1/2 cup heavy cream, whipped"],instructions:["Preheat griddle to medium heat.","Whisk eggs, milk, vanilla.","Dip sourdough slices in mixture.","Cook 2-3 min per side until golden.","Top with strawberries and whipped cream."]},
-  {name:"Pizza Hut-Style Pan Pizza",category:"Lunch",ingredients:["1 1/4 cups warm water","2 tsp sugar","2 1/4 tsp active dry yeast","2 1/2 cups all-purpose flour","1 tsp salt","4 tbsp olive oil, divided","Toppings of choice"],instructions:["Combine water, sugar, yeast. Sit 5 min.","Mix in flour & salt, knead 5-7 min.","Coat skillet with 2 tbsp olive oil, place dough, rise 1-2 hrs.","Add toppings, drizzle remaining oil.","Bake 450°F 15-20 min."]},
-  {name:"Crispy Popeyes-Style Wings",category:"Dinner",ingredients:["2 lbs chicken wings","1 cup buttermilk","1 tbsp Cajun seasoning","2 cups flour","1 tbsp cornstarch","1 tsp paprika","1 tsp garlic powder","Salt & pepper","Oil for frying"],instructions:["Marinate wings in buttermilk & seasoning 4 hrs.","Mix flour, cornstarch, paprika, garlic, salt, pepper.","Dredge wings, fry 350°F 8-10 min."]}
-];
+    const recipes = []; // Add your recipes here (name, category, ingredients, instructions, notes)
 
-const recipeGrid = document.getElementById('recipe-grid');
-const tabs = document.querySelectorAll('#category-tabs button');
-const addRecipeForm = document.getElementById('add-recipe-form');
-const notesForm = document.getElementById('notes-form');
-const notesDisplay = document.getElementById('notes-display');
-const aiGeneratorForm = document.getElementById('ai-generator-form');
-const aiOutput = document.getElementById('ai-output');
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabs = document.querySelectorAll('.recipe-tab');
 
-function createRecipeCard(recipe){
-  const card = document.createElement('div');
-  card.classList.add('recipe-card');
-  card.innerHTML = `
-    <div class="recipe-header">${recipe.name} <span>+</span></div>
-    <div class="recipe-content">
-      <h4>Ingredients</h4><ul>${recipe.ingredients.map(i=>`<li>${i}</li>`).join('')}</ul>
-      <h4>Instructions</h4><ol>${recipe.instructions.map(i=>`<li>${i}</li>`).join('')}</ol>
-    </div>
-  `;
-  card.querySelector('.recipe-header').addEventListener('click',()=>{
-    const content = card.querySelector('.recipe-content');
-    content.style.display = content.style.display==="block"?"none":"block";
-  });
-  return card;
-}
+    function displayTab(category) {
+        tabs.forEach(tab => tab.style.display = 'none');
+        const currentTab = document.getElementById(category);
+        currentTab.style.display = 'flex';
+        currentTab.innerHTML = '';
+        const filtered = recipes.filter(r => r.category === category);
+        filtered.forEach(recipe => {
+            const card = document.createElement('div');
+            card.classList.add('recipe-card');
+            card.innerHTML = `
+                <h3>${recipe.name}</h3>
+                <h4>Ingredients</h4>
+                <ul>${recipe.ingredients.map(i => `<li>${i}</li>`).join('')}</ul>
+                <h4>Instructions</h4>
+                <ol>${recipe.instructions.map(i => `<li>${i}</li>`).join('')}</ol>
+                ${recipe.notes ? `<p><strong>Notes:</strong> ${recipe.notes}</p>` : ''}
+            `;
+            currentTab.appendChild(card);
+        });
+    }
 
-function displayRecipes(filter="All"){
-  recipeGrid.innerHTML="";
-  recipes.filter(r=>filter==="All"||r.category===filter).forEach(r=>recipeGrid.appendChild(createRecipeCard(r)));
-}
+    tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            tabButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            displayTab(btn.dataset.tab);
+        });
+    });
 
-tabs.forEach(tab=>{
-  tab.addEventListener('click',()=>{
-    tabs.forEach(t=>t.classList.remove('active'));
-    tab.classList.add('active');
-    displayRecipes(tab.dataset.category);
-  });
-});
+    // Show Breakfast by default
+    displayTab('Breakfast');
 
-addRecipeForm.addEventListener('submit',e=>{
-  e.preventDefault();
-  const newRecipe={
-    name:document.getElementById('recipeName').value,
-    category:document.getElementById('category').value,
-    ingredients:document.getElementById('ingredients').value.split(',').map(i=>i.trim()),
-    instructions:document.getElementById('instructions').value.split('\n').map(i=>i.trim())
-  };
-  recipes.push(newRecipe);
-  displayRecipes(document.querySelector('#category-tabs button.active').dataset.category);
-  addRecipeForm.reset();
-});
-
-notesForm.addEventListener('submit',e=>{
-  e.preventDefault();
-  const noteText=document.getElementById('note-input').value;
-  if(noteText){
-    const div=document.createElement('div');
-    div.className="note";
-    div.textContent=noteText;
-    notesDisplay.prepend(div);
-    notesForm.reset();
-  }
-});
-
-aiGeneratorForm.addEventListener('submit',e=>{
-  e.preventDefault();
-  const prompt=document.getElementById('ai-input').value;
-  aiOutput.innerHTML=`<p><strong>Generated Recipe for:</strong> ${prompt}</p><p>Ingredients: TBD</p><p>Instructions: TBD</p>`;
-  aiGeneratorForm.reset();
-});
-
-displayRecipes();
-</script>
-
-</body>
-</html>
+    // Add new recipe
+    document.getElementById('add-recipe-form').addEventListener('submit', e => {
+        e.preventDefault();
+        const newRecipe = {
+            name: document.getElementById('recipeName').value,
