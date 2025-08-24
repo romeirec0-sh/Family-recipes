@@ -1,63 +1,133 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Family Recipes</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #faf7f2; color: #333; margin: 0; padding: 0; }
-    header { background: #5a3e85; color: white; padding: 20px; text-align: center; }
-    h1 { margin: 0; }
-    .container { padding: 20px; max-width: 800px; margin: auto; }
-    .recipe { background: white; padding: 15px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-    .recipe h2 { margin-top: 0; }
-    button { background: #5a3e85; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; }
-    button:hover { background: #7b5bbf; }
+    body {
+      font-family: "Georgia", serif;
+      margin: 0;
+      padding: 20px;
+      background: #fff8f0;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      font-size: 3em;
+      margin-bottom: 10px;
+      color: #b85c38;
+    }
+    .recipe-form, .recipe-list {
+      max-width: 700px;
+      margin: 20px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+    input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+    }
+    button {
+      background: #b85c38;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #8c4227;
+    }
+    .recipe-card {
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+    }
+    .recipe-card h3 {
+      margin: 0;
+      color: #444;
+    }
+    .recipe-card p {
+      margin: 5px 0;
+    }
   </style>
 </head>
 <body>
-  <header>
-    <h1>🍴 Family Recipes</h1>
-    <p>A collection of recipes, memories, and flavor ✨</p>
-  </header>
-  <div class="container">
-    <div id="recipe-library"></div>
-    <button onclick="generateRecipe()">✨ Generate New Recipe</button>
+  <h1>🍴 Family Recipes 🍴</h1>
+
+  <div class="recipe-form">
+    <h2>Add a Recipe</h2>
+    <label for="name">Recipe Name</label>
+    <input type="text" id="name" placeholder="Ex: Garlic Butter Wings">
+
+    <label for="ingredients">Ingredients</label>
+    <textarea id="ingredients" placeholder="List ingredients here..."></textarea>
+
+    <label for="steps">Instructions</label>
+    <textarea id="steps" placeholder="Write step-by-step instructions..."></textarea>
+
+    <button onclick="saveRecipe()">Save Recipe</button>
+  </div>
+
+  <div class="recipe-list">
+    <h2>Saved Recipes</h2>
+    <div id="recipes"></div>
   </div>
 
   <script>
-    const recipeLibrary = document.getElementById('recipe-library');
+    function saveRecipe() {
+      let name = document.getElementById("name").value.trim();
+      let ingredients = document.getElementById("ingredients").value.trim();
+      let steps = document.getElementById("steps").value.trim();
 
-    function addRecipe(title, ingredients, instructions) {
-      const recipeDiv = document.createElement('div');
-      recipeDiv.className = 'recipe';
-      recipeDiv.innerHTML = `<h2>${title}</h2>
-        <h4>Ingredients</h4>
-        <ul>${ingredients.map(i => `<li>${i}</li>`).join('')}</ul>
-        <h4>Instructions</h4>
-        <ol>${instructions.map(s => `<li>${s}</li>`).join('')}</ol>`;
-      recipeLibrary.appendChild(recipeDiv);
+      if (!name || !ingredients || !steps) {
+        alert("Please fill in all fields!");
+        return;
+      }
+
+      let recipes = JSON.parse(localStorage.getItem("recipes")) || [];
+      recipes.push({ name, ingredients, steps });
+      localStorage.setItem("recipes", JSON.stringify(recipes));
+
+      displayRecipes();
+      document.getElementById("name").value = "";
+      document.getElementById("ingredients").value = "";
+      document.getElementById("steps").value = "";
     }
 
-    function generateRecipe() {
-      const title = "Garlic Truffle Pasta";
-      const ingredients = [
-        "8 oz pasta",
-        "2 tbsp olive oil",
-        "3 garlic cloves, minced",
-        "1 tbsp truffle oil",
-        "Salt & pepper to taste",
-        "Grated parmesan (optional)"
-      ];
-      const instructions = [
-        "Cook pasta until al dente, drain and set aside.",
-        "In a pan, heat olive oil and sauté garlic until fragrant.",
-        "Toss pasta with garlic, olive oil, and truffle oil.",
-        "Season with salt, pepper, and top with parmesan."
-      ];
-      addRecipe(title, ingredients, instructions);
+    function displayRecipes() {
+      let recipes = JSON.parse(localStorage.getItem("recipes")) || [];
+      let recipeContainer = document.getElementById("recipes");
+      recipeContainer.innerHTML = "";
+
+      recipes.forEach((r, index) => {
+        let div = document.createElement("div");
+        div.className = "recipe-card";
+        div.innerHTML = `
+          <h3>${r.name}</h3>
+          <p><strong>Ingredients:</strong> ${r.ingredients}</p>
+          <p><strong>Instructions:</strong> ${r.steps}</p>
+          <button onclick="deleteRecipe(${index})">Delete</button>
+        `;
+        recipeContainer.appendChild(div);
+      });
     }
+
+    function deleteRecipe(index) {
+      let recipes = JSON.parse(localStorage.getItem("recipes")) || [];
+      recipes.splice(index, 1);
+      localStorage.setItem("recipes", JSON.stringify(recipes));
+      displayRecipes();
+    }
+
+    window.onload = displayRecipes;
   </script>
 </body>
 </html>
