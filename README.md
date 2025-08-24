@@ -2,132 +2,210 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Family Recipes</title>
   <style>
     body {
       font-family: "Georgia", serif;
       margin: 0;
-      padding: 20px;
-      background: #fff8f0;
+      background: #faf7f2;
       color: #333;
     }
-    h1 {
-      text-align: center;
-      font-size: 3em;
-      margin-bottom: 10px;
-      color: #b85c38;
-    }
-    .recipe-form, .recipe-list {
-      max-width: 700px;
-      margin: 20px auto;
-      background: #fff;
+
+    header {
+      background: linear-gradient(135deg, #d4a373, #8d5524);
       padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
-    }
-    label {
-      display: block;
-      margin: 10px 0 5px;
-    }
-    input, textarea, button {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      font-size: 1em;
-    }
-    button {
-      background: #b85c38;
+      text-align: center;
       color: white;
-      border: none;
-      cursor: pointer;
+      font-size: 28px;
+      font-weight: bold;
+      letter-spacing: 2px;
     }
-    button:hover {
-      background: #8c4227;
-    }
-    .recipe-card {
-      border-bottom: 1px solid #ddd;
+
+    nav {
+      background: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: center;
       padding: 10px 0;
     }
-    .recipe-card h3 {
+
+    nav ul {
+      list-style: none;
+      padding: 0;
       margin: 0;
-      color: #444;
+      display: flex;
+      gap: 20px;
     }
-    .recipe-card p {
-      margin: 5px 0;
+
+    nav li {
+      position: relative;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #8d5524;
+      font-weight: bold;
+      padding: 8px 12px;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #d4a373;
+    }
+
+    nav ul ul {
+      display: none;
+      position: absolute;
+      top: 30px;
+      left: 0;
+      background: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      padding: 10px;
+    }
+
+    nav li:hover > ul {
+      display: block;
+    }
+
+    section {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: #8d5524;
+      border-bottom: 2px solid #d4a373;
+      padding-bottom: 5px;
+    }
+
+    .recipe-card {
+      border: 1px solid #eee;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 6px;
+      background: #fafafa;
+    }
+
+    .note-box {
+      width: 100%;
+      height: 100px;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background: #d4a373;
+      border: none;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #8d5524;
     }
   </style>
 </head>
 <body>
-  <h1>🍴 Family Recipes 🍴</h1>
+  <header>🍴 Family Recipes</header>
 
-  <div class="recipe-form">
-    <h2>Add a Recipe</h2>
-    <label for="name">Recipe Name</label>
-    <input type="text" id="name" placeholder="Ex: Garlic Butter Wings">
+  <nav>
+    <ul>
+      <li><a href="#">Categories ▾</a>
+        <ul>
+          <li><a href="#breakfast">Breakfast</a></li>
+          <li><a href="#lunch">Lunch</a></li>
+          <li><a href="#dinner">Dinner</a></li>
+          <li><a href="#desserts">Desserts</a></li>
+          <li><a href="#sauces">Sauces</a></li>
+          <li><a href="#breads">Breads</a></li>
+        </ul>
+      </li>
+      <li><a href="#add-recipe">Add Recipe</a></li>
+      <li><a href="#notes">Notes</a></li>
+      <li><a href="#ai">AI Generator</a></li>
+    </ul>
+  </nav>
 
-    <label for="ingredients">Ingredients</label>
-    <textarea id="ingredients" placeholder="List ingredients here..."></textarea>
+  <section id="breakfast">
+    <h2>Breakfast</h2>
+    <div class="recipe-card">
+      <h3>Sourdough Strawberry & Cream</h3>
+      <p>Soft sourdough loaf swirled with strawberry and cream cheese filling.</p>
+    </div>
+  </section>
 
-    <label for="steps">Instructions</label>
-    <textarea id="steps" placeholder="Write step-by-step instructions..."></textarea>
+  <section id="lunch">
+    <h2>Lunch</h2>
+    <div class="recipe-card">
+      <h3>Pizza Hut Style Pizza</h3>
+      <p>Thick, buttery crust with overnight ferment for max flavor.</p>
+    </div>
+  </section>
 
-    <button onclick="saveRecipe()">Save Recipe</button>
-  </div>
+  <section id="dinner">
+    <h2>Dinner</h2>
+    <div class="recipe-card">
+      <h3>Crispy Popeyes-Style Wings</h3>
+      <p>Perfectly seasoned, crispy outside, juicy inside. Toss with buffalo or parm.</p>
+    </div>
+  </section>
 
-  <div class="recipe-list">
-    <h2>Saved Recipes</h2>
-    <div id="recipes"></div>
-  </div>
+  <section id="desserts">
+    <h2>Desserts</h2>
+    <div class="recipe-card">
+      <h3>Mango Cheesecake Cobbler</h3>
+      <p>Mango filling with shortbread crust and cream cheese swirl.</p>
+    </div>
+  </section>
 
-  <script>
-    function saveRecipe() {
-      let name = document.getElementById("name").value.trim();
-      let ingredients = document.getElementById("ingredients").value.trim();
-      let steps = document.getElementById("steps").value.trim();
+  <section id="sauces">
+    <h2>Sauces</h2>
+    <div class="recipe-card">
+      <h3>Buffalo Sauce</h3>
+      <p>Rich, spicy butter-based sauce for wings and more.</p>
+    </div>
+  </section>
 
-      if (!name || !ingredients || !steps) {
-        alert("Please fill in all fields!");
-        return;
-      }
+  <section id="breads">
+    <h2>Breads</h2>
+    <div class="recipe-card">
+      <h3>Blueberry Sourdough</h3>
+      <p>Soft sourdough loaf with fresh blueberries and cream cheese filling.</p>
+    </div>
+  </section>
 
-      let recipes = JSON.parse(localStorage.getItem("recipes")) || [];
-      recipes.push({ name, ingredients, steps });
-      localStorage.setItem("recipes", JSON.stringify(recipes));
+  <section id="add-recipe">
+    <h2>Add Your Own Recipe</h2>
+    <form>
+      <input type="text" placeholder="Recipe Name" style="width:100%; padding:10px; margin:5px 0;"><br>
+      <textarea placeholder="Ingredients & Instructions" style="width:100%; height:150px; padding:10px; margin:5px 0;"></textarea><br>
+      <button type="submit">Add Recipe</button>
+    </form>
+  </section>
 
-      displayRecipes();
-      document.getElementById("name").value = "";
-      document.getElementById("ingredients").value = "";
-      document.getElementById("steps").value = "";
-    }
+  <section id="notes">
+    <h2>Notes</h2>
+    <textarea class="note-box" placeholder="Write your family notes here..."></textarea>
+    <button>Save Note</button>
+  </section>
 
-    function displayRecipes() {
-      let recipes = JSON.parse(localStorage.getItem("recipes")) || [];
-      let recipeContainer = document.getElementById("recipes");
-      recipeContainer.innerHTML = "";
-
-      recipes.forEach((r, index) => {
-        let div = document.createElement("div");
-        div.className = "recipe-card";
-        div.innerHTML = `
-          <h3>${r.name}</h3>
-          <p><strong>Ingredients:</strong> ${r.ingredients}</p>
-          <p><strong>Instructions:</strong> ${r.steps}</p>
-          <button onclick="deleteRecipe(${index})">Delete</button>
-        `;
-        recipeContainer.appendChild(div);
-      });
-    }
-
-    function deleteRecipe(index) {
-      let recipes = JSON.parse(localStorage.getItem("recipes")) || [];
-      recipes.splice(index, 1);
-      localStorage.setItem("recipes", JSON.stringify(recipes));
-      displayRecipes();
-    }
-
-    window.onload = displayRecipes;
-  </script>
+  <section id="ai">
+    <h2>AI Recipe Generator</h2>
+    <p>Type an idea and let AI build a recipe for you:</p>
+    <input type="text" placeholder="e.g. truffle mac and cheese" style="width:100%; padding:10px; margin:10px 0;">
+    <button>Generate Recipe</button>
+    <div id="ai-result" style="margin-top:15px; padding:15px; background:#fafafa; border-radius:6px;"></div>
+  </section>
 </body>
 </html>
