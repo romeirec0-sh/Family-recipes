@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Family Recipes</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #faf7f2; color: #333; margin: 0; padding: 0; }
+    header { background: #5a3e85; color: white; padding: 20px; text-align: center; }
+    h1 { margin: 0; }
+    .container { padding: 20px; max-width: 800px; margin: auto; }
+    .recipe { background: white; padding: 15px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    .recipe h2 { margin-top: 0; }
+    button { background: #5a3e85; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #7b5bbf; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🍴 Family Recipes</h1>
+    <p>A collection of recipes, memories, and flavor ✨</p>
+  </header>
+  <div class="container">
+    <div id="recipe-library"></div>
+    <button onclick="generateRecipe()">✨ Generate New Recipe</button>
+  </div>
+
+  <script>
+    const recipeLibrary = document.getElementById('recipe-library');
+
+    function addRecipe(title, ingredients, instructions) {
+      const recipeDiv = document.createElement('div');
+      recipeDiv.className = 'recipe';
+      recipeDiv.innerHTML = `<h2>${title}</h2>
+        <h4>Ingredients</h4>
+        <ul>${ingredients.map(i => `<li>${i}</li>`).join('')}</ul>
+        <h4>Instructions</h4>
+        <ol>${instructions.map(s => `<li>${s}</li>`).join('')}</ol>`;
+      recipeLibrary.appendChild(recipeDiv);
+    }
+
+    function generateRecipe() {
+      const title = "Garlic Truffle Pasta";
+      const ingredients = [
+        "8 oz pasta",
+        "2 tbsp olive oil",
+        "3 garlic cloves, minced",
+        "1 tbsp truffle oil",
+        "Salt & pepper to taste",
+        "Grated parmesan (optional)"
+      ];
+      const instructions = [
+        "Cook pasta until al dente, drain and set aside.",
+        "In a pan, heat olive oil and sauté garlic until fragrant.",
+        "Toss pasta with garlic, olive oil, and truffle oil.",
+        "Season with salt, pepper, and top with parmesan."
+      ];
+      addRecipe(title, ingredients, instructions);
+    }
+  </script>
+</body>
+</html>
